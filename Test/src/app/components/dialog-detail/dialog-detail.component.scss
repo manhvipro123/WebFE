@@ -1,0 +1,55 @@
+.pop-up-box{ 
+    width: 40vw;
+}
+.ava{
+    float: left;
+}
+
+.ava img{
+    margin: 0;
+    width: 300px;
+
+    padding-bottom: 50px;
+    padding-left: 20px;
+    
+}
+
+.bio{
+    float: right;
+    
+    padding-bottom: 50px;
+    width: 300px;
+}
+
+.tag{
+    display: inline-block;
+    width: 70px;
+}
+
+li h2{
+    width: 230px;
+    display: inline-block;
+}
+
+li h3{
+    width: 230px;
+    display: inline-block;
+}
+
+#close{
+    clear: both;
+}
+
+.option-char:hover{
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+ul{
+    list-style-type: none;
+}
+
+::ng-deep .mat-dialog-container{
+    padding: 0;
+    margin: 0;
+}

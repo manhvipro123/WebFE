@@ -1,0 +1,68 @@
+<form id="input-form" [formGroup]="form" (submit)="update()">
+    <p style="font-weight:bolder;">UPDATE STUDENT</p>
+    <mat-form-field appearance="legacy">
+        <mat-label>Id</mat-label>
+        <input formControlName="Id" matInput placeholder="Id" [readonly]="true" >
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+        <mat-label>Name</mat-label>
+        <input formControlName="Name" matInput placeholder="Name">
+        <div *ngIf="form.controls['Name'].hasError('required') && (form.controls['Name'].dirty||form.controls['Name'].touched)">
+            <small id="emailHelp" class="text-danger">Name is invalid.</small>
+        </div>
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+        <mat-label>Class</mat-label>
+        <input formControlName="Class" matInput placeholder="Class">
+        <div *ngIf="form.controls['Class'].hasError('required') && (form.controls['Class'].dirty||form.controls['Class'].touched)">
+            <small id="emailHelp" class="text-danger">Class is empty.</small>
+        </div>
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+        <mat-label>Gender</mat-label>
+        <mat-select [(ngModel)]="selectedGend" formControlName="Gender">
+            <mat-option *ngFor="let gend of gends" [value]="gend.value">
+                {{gend.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+        <mat-label>Role</mat-label>
+        <mat-select [(ngModel)]="selectedRole" formControlName="Role">
+            <mat-option *ngFor="let role of roles" [value]="role.value">
+                {{role.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="legacy">
+        <mat-label>Phone</mat-label>
+        <input formControlName="Phone" matInput placeholder="Phone">
+        <div *ngIf="form.controls['Phone'].hasError('required') && (form.controls['Phone'].dirty||form.controls['Phone'].touched)">
+            <small id="emailHelp" class="text-danger">Phone is empty.</small>
+        </div>
+        <div *ngIf="form.controls['Phone'].hasError('pattern')">
+            <small id="emailHelp" class="text-danger">Phone's length is not correct.</small>
+        </div>
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+        <mat-label>Address</mat-label>
+        <input formControlName="Address" matInput placeholder="Address">
+        <div *ngIf="form.controls['Address'].hasError('required') && (form.controls['Address'].dirty||form.controls['Address'].touched)">
+            <small id="emailHelp" class="text-danger">Address is empty.</small>
+        </div>
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+        <mat-label>Email</mat-label>
+        <input  formControlName="Email" matInput placeholder="Email">
+        <div *ngIf="form.controls['Email'].hasError('required') && (form.controls['Email'].dirty||form.controls['Email'].touched)">
+            <small id="emailHelp" class="text-danger">Email is empty.</small>
+        </div>
+        <div *ngIf="form.controls['Email'].hasError('email') && (form.controls['Email'].dirty||form.controls['Email'].touched)">
+            <small id="emailHelp" class="text-danger">Email in incorrect</small>
+        </div>
+    </mat-form-field>
+    <br>
+    <input type="file" (change)="onChangeImage($event)"> 
+    <button  [disabled]="!form.valid" mat-raised-button>SUBMIT</button>
+</form>

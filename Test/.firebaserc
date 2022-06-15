@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "webfe-63035": {
+      "hosting": {
+        "Test": [
+          "webfe-63035"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "webfe-63035"
+  }
+}

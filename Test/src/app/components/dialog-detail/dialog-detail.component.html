@@ -1,0 +1,43 @@
+<div class="pop-up-box">
+    <h1 style="text-align:center;padding:10px 0 10px 0;font-weight: bolder;">Student Card</h1>
+    <div class="ava">
+        <img [src]="data.url"  alt="">
+    </div>
+    <div class="bio">
+        <ul>
+            <li>
+                <div class="tag">Name: </div>
+                <h2>{{data.Name}}</h2>
+            </li>
+            <li>
+                <div class="tag">Class: </div>
+                <h3>{{data.Class}}</h3>
+            </li>
+            <li>
+                <div class="tag">Gender: </div>
+                <h3>{{data.Gender}}</h3>
+            </li>
+            <li>
+                <div class="tag">Role: </div>
+                <h3>{{data.Role}}</h3>
+            </li>
+            <li>
+                <div class="tag">Phone: </div>
+                <h3>{{data.Phone}}</h3>
+            </li>
+            <li>
+                <div class="tag">Address: </div>
+                <h3>{{data.Address}}</h3>
+            </li>
+            <li>
+                <div class="tag">Email: </div>
+                <h3>{{data.Email}}</h3>
+            </li>
+            <a class="option-char" (click)="openUpdateDialog(this.data)" style="text-align: center;">UPDATE</a>
+            <br>
+            <a class="option-char" (click)="openUpdateItem(this.data)" style="text-align: center;">UPDATE BY SERVER</a>
+        </ul>
+    </div>
+    <div id="close"></div>
+    
+</div>

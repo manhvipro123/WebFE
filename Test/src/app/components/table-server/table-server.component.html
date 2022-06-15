@@ -1,0 +1,66 @@
+<div class="row grid-responsive" style="display:block">
+    <div class="column page-heading">
+        <div class="large-card">
+            <h1 style="text-align:center;margin-top:2rem;">Student Management</h1>
+
+            <!-- <a class="button">Add Student</a> -->
+            <button (click)="openAddDialog()">
+                Add Student
+            </button>
+            
+        </div>
+    </div>
+
+    <!--Tables-->
+    <h5 class="mt-2"><b>Tables</b></h5><a class="anchor" name="tables"></a>
+    <div class="row grid-responsive">
+        <div class="column ">
+            <div class="card">
+                <div class="card-title" style="border:none">
+                    <h3 style="float:left;">Student's List</h3>
+                    <input type="text" [(ngModel)]="searchText" placeholder="Search any" style="float:right;width: 200px;height: inherit;">
+                </div>
+
+                <div class="card-block">
+                    <table matSort (matSortChange)="sortData($event)">
+                        <thead>
+                            <tr>
+                                <th mat-sort-header="Id">Id</th>
+                                <th mat-sort-header="Name">Name</th>
+                                <th mat-sort-header="Class">Class</th>
+                                <th mat-sort-header="Gender">Gender</th>
+                                <!-- <th mat-sort-header="Role">Role</th>
+                                <th mat-sort-header="Phone">Phone</th>
+                                <th mat-sort-header="Address">Address</th>
+                                <th mat-sort-header="Email">Email</th> -->
+                                <th>Details</th>
+                                <th>Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <!-- <tr *ngFor="let item of students | async"> -->
+                            <tr  *ngFor="let item of students | filter:searchText | paginate: config" class="itemRow">
+                                <td>{{ item.Id }}</td>
+                                <td>{{ item.Name }}</td>
+                                <td>{{ item.Class }}</td>
+                                <td>{{ item.Gender }}</td>
+                                <!-- <td>{{ item.Role }}</td>
+                                <td>{{ item.Phone }}</td>
+                                <td>{{ item.Address }}</td>
+                                <td>{{ item.Email }}</td> -->
+                                <td>
+                                    <a class="option-char" (click)="openDetailDialog(this.item)">VIEW</a>
+                                </td>
+                                <td>
+                                    <a class="option-char" (click)="deleteStu(this.item)">DELETE</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
