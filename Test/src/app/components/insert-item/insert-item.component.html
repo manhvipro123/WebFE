@@ -1,17 +1,19 @@
 <form id="input-form" [formGroup]="form" (submit)="pushData()">
     <p style="font-weight:bolder;">ADD NEW STUDENT</p>
-    <p>ID student: {{this.idCount}}</p>
+    <p>ID student: {{this.id}}</p>
     <mat-form-field appearance="legacy">
         <mat-label>Name</mat-label>
         <input formControlName="Name" matInput placeholder="Name">
-        <div *ngIf="form.controls['Name'].hasError('required') && (form.controls['Name'].dirty||form.controls['Name'].touched)">
+        <div
+            *ngIf="form.controls['Name'].hasError('required') && (form.controls['Name'].dirty||form.controls['Name'].touched)">
             <small id="emailHelp" class="text-danger">Name is invalid.</small>
         </div>
     </mat-form-field>
     <mat-form-field appearance="legacy">
         <mat-label>Class</mat-label>
         <input formControlName="Class" matInput placeholder="Class">
-        <div *ngIf="form.controls['Class'].hasError('required') && (form.controls['Class'].dirty||form.controls['Class'].touched)">
+        <div
+            *ngIf="form.controls['Class'].hasError('required') && (form.controls['Class'].dirty||form.controls['Class'].touched)">
             <small id="emailHelp" class="text-danger">Class is empty.</small>
         </div>
     </mat-form-field>
@@ -22,7 +24,12 @@
                 {{gend.viewValue}}
             </mat-option>
         </mat-select>
+        <div
+            *ngIf="form.controls['Gender'].hasError('required') && (form.controls['Gender'].dirty||form.controls['Gender'].touched)">
+            <small id="emailHelp" class="text-danger">Gender is empty.</small>
+        </div>
     </mat-form-field>
+
     <mat-form-field appearance="legacy">
         <mat-label>Role</mat-label>
         <mat-select [(ngModel)]="selectedRole" formControlName="Role">
@@ -30,36 +37,57 @@
                 {{role.viewValue}}
             </mat-option>
         </mat-select>
+        <div
+            *ngIf="form.controls['Role'].hasError('required') && (form.controls['Role'].dirty||form.controls['Role'].touched)">
+            <small id="emailHelp" class="text-danger">Role is empty.</small>
+        </div>
     </mat-form-field>
-  
+
+    <mat-form-field appearance="legacy">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="selectedStat" formControlName="Status">
+            <mat-option *ngFor="let stat of stats" [value]="stat.value">
+                {{stat.viewValue}}
+            </mat-option>
+            <div
+                *ngIf="form.controls['Status'].hasError('required') && (form.controls['Status'].dirty||form.controls['Status'].touched)">
+                <small id="emailHelp" class="text-danger">Status is empty.</small>
+            </div>
+        </mat-select>
+    </mat-form-field>
+
     <mat-form-field appearance="legacy">
         <mat-label>Phone</mat-label>
         <input formControlName="Phone" matInput placeholder="Phone">
-        <div *ngIf="form.controls['Phone'].hasError('required') && (form.controls['Phone'].dirty||form.controls['Phone'].touched)">
+        <div
+            *ngIf="form.controls['Phone'].hasError('required') && (form.controls['Phone'].dirty||form.controls['Phone'].touched)">
             <small id="emailHelp" class="text-danger">Phone is empty.</small>
         </div>
         <div *ngIf="form.controls['Phone'].hasError('pattern')">
-            <small id="emailHelp" class="text-danger">Phone's length is not correct.</small>
+            <small id="emailHelp" class="text-danger">Phone's length is not correct or it contain character.</small>
         </div>
     </mat-form-field>
     <mat-form-field appearance="legacy">
         <mat-label>Address</mat-label>
         <input formControlName="Address" matInput placeholder="Address">
-        <div *ngIf="form.controls['Address'].hasError('required') && (form.controls['Address'].dirty||form.controls['Address'].touched)">
+        <div
+            *ngIf="form.controls['Address'].hasError('required') && (form.controls['Address'].dirty||form.controls['Address'].touched)">
             <small id="emailHelp" class="text-danger">Address is empty.</small>
         </div>
     </mat-form-field>
     <mat-form-field appearance="legacy">
         <mat-label>Email</mat-label>
-        <input  formControlName="Email" matInput placeholder="Email">
-        <div *ngIf="form.controls['Email'].hasError('required') && (form.controls['Email'].dirty||form.controls['Email'].touched)">
+        <input formControlName="Email" matInput placeholder="Email">
+        <div
+            *ngIf="form.controls['Email'].hasError('required') && (form.controls['Email'].dirty||form.controls['Email'].touched)">
             <small id="emailHelp" class="text-danger">Email is empty.</small>
         </div>
-        <div *ngIf="form.controls['Email'].hasError('email') && (form.controls['Email'].dirty||form.controls['Email'].touched)">
+        <div
+            *ngIf="form.controls['Email'].hasError('email') && (form.controls['Email'].dirty||form.controls['Email'].touched)">
             <small id="emailHelp" class="text-danger">Email in incorrect</small>
         </div>
     </mat-form-field>
     <br>
-    <input type="file" (change)="onChangeImage($event)"> 
-    <button  [disabled]="!form.valid" mat-raised-button>SUBMIT</button>
+    <input type="file" (change)="onChangeImage($event)">
+    <button [disabled]="!form.valid" mat-raised-button>SUBMIT</button>
 </form>

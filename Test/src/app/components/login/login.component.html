@@ -1,0 +1,15 @@
+
+<body>
+    <div class="login-page">
+        <div class="form" >
+          <form class="login-form" >
+            <input [(ngModel)]="email" name ="email" placeholder="Email" type="text"/>
+            <input [(ngModel)]="password" name ="password" placeholder="Password" type="password"/>
+            <button (click)="tryLoginWithFirebaseAccount()">Sign in</button>
+            <button style="background-color:red" (click)="tryGoogleLogin()">Login with GG</button>
+            <p class="message">Not registered? <a href="/register" >Create an account</a></p>
+          </form>
+        </div>
+      </div>
+</body>
+

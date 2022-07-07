@@ -1,26 +1,35 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
-
 import { Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddComponent } from '../dialog-add/dialog-add.component';
 import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { Student } from 'src/models/student.model';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
+  selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TableComponent implements OnInit {
+  //tooltip
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
+  position = new FormControl(this.positionOptions[3]);
 
   searchText: any;
   students: Student[] = [];
 
   //page-slice
   config: any;
-  //
+  
+  //icon-status
+  Studying : String = "Studying";
+  Graduate : String = "Graduate";
+  Reserve: String = "Reserve";
 
   constructor(
     private readonly afs: AngularFirestore,
@@ -35,21 +44,21 @@ export class TableComponent implements OnInit {
     // or use .snapshotChanges() instead. Only using for versions 7 and earlier
 
     // this.students = this.studentsCollection.valueChanges({ idField: 'docID' }); //chỉ sử dụng cho Angular 8,9
-    this.studentsCollection.valueChanges({ idField: 'docID' }).subscribe(data => { 
-      this.students = data; 
-      console.log(this.students) 
-      console.log("count of item" + this.students.length);
-     
+    this.studentsCollection.valueChanges({ idField: 'docID' }).subscribe(data => {
+      this.students = data;
+      console.log(this.students)
+      console.log("count of item: " + this.students.length);
+
     });//docID: ten field đại diện cho documnent id, lưu ý không 
     //được đặt trùng với tên field khai báo trong dữ liệu
-    
+
     this.config = {
       itemsPerPage: 5,
       currentPage: 1,
       totalItems: this.students.length
     };
 
-   
+
 
   }//end constructor
   pageChanged(event: any) {
@@ -73,7 +82,7 @@ export class TableComponent implements OnInit {
   }
 
 
-  
+
   public openDetailDialog(stu: any): void {
     const dialogRef = this.dialog.open(DialogDetailComponent, {
       data: stu
@@ -110,6 +119,8 @@ export class TableComponent implements OnInit {
           return compare(a.Gender, b.Gender, isAsc);
         case 'Role':
           return compare(a.Role, b.Role, isAsc);
+        case 'Status':
+          return compare(a.Status, b.Status, isAsc);
         case 'Address':
           return compare(a.Address, b.Address, isAsc);
         case 'Phone':

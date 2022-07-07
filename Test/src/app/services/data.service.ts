@@ -24,8 +24,8 @@ export class DataService {
     return this.http.post(environment.endpoint + 'api/students', student);
   }
   
-  public putStudent(student: Student) {
-    return this.http.put(environment.endpoint + 'api/students', student);
+  public putStudent(student: Student, docID: String) {
+    return this.http.put(environment.endpoint + `api/${docID}`, student);
   }
 
   public deleteStudent(docid: string) {

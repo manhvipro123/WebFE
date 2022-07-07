@@ -1,5 +1,5 @@
 import { Component, OnInit,Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Student } from 'src/models/student.model';
@@ -14,6 +14,12 @@ interface Role {
   value: string;
   viewValue: string;
 }
+
+interface Stat {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-update-item',
   templateUrl: './update-item.component.html',
@@ -36,7 +42,15 @@ export class UpdateItemComponent implements OnInit {
     { value: 'Secretary', viewValue: 'Secretary' },
     { value: 'Ugly', viewValue: 'Ugly' }
   ];
-  private studentsCollection: AngularFirestoreCollection<Student>;
+
+  selectedStat: string | undefined = this.data.Status;
+  stats: Stat[] = [
+    { value: 'Graduate', viewValue: 'Graduate' },
+    { value: 'Studying', viewValue: 'Studying' },
+    { value: 'Reserve', viewValue: 'Reserve' },
+  ];
+
+  studentsCollection: AngularFirestoreCollection<Student>;
   form !: FormGroup;
   constructor(
     private data_service: DataService,
@@ -44,6 +58,7 @@ export class UpdateItemComponent implements OnInit {
     public formBuilder: FormBuilder,
     private readonly afs: AngularFirestore,
     public dialogRef: MatDialogRef<UpdateItemComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.studentsCollection = this.afs.collection<Student>('students');
@@ -53,6 +68,7 @@ export class UpdateItemComponent implements OnInit {
       Class: [`${this.data.Class}`, Validators.required],
       Gender: [`${this.data.Gender}`, Validators.required],
       Role: [`${this.data.Role}`, Validators.required],
+      Status: [`${this.data.Status}`, Validators.required],
       Phone: [`${this.data.Phone}`, [Validators.required, Validators.pattern('[0-9]{9,10}')]],
       Address: [`${this.data.Address}`, Validators.required],
       Email: [`${this.data.Email}`, [Validators.required, Validators.email]],
@@ -63,27 +79,43 @@ export class UpdateItemComponent implements OnInit {
     console.log(this.data)
   }
 
+  public async update() {
+    if(this.Path != null){
+      let url = await this.SupportService.uploadImage(this.Path, 'student', this.data.storage);   
+      let newFormStudent = {
+       ...this.form.value,
+       storage: this.data.storage,
+       url: url,
+     }
+      this.data_service.putStudent(newFormStudent,this.data.docID).subscribe(
+       res=> {
+         alert('cap nhat thanh cong')
+         this.dialogRef.close();
+         window.location.reload();
+       }
+     )
+    }
+    else{
+      let newFormStudent = {
+        ...this.form.value,
+        storage: this.data.storage,
+        url: this.data.url
+      }
+       this.data_service.putStudent(newFormStudent,this.data.docID).subscribe(
+        res=> {
+          alert('cap nhat thanh cong')
+          this.dialogRef.close();
+          window.location.reload();
+        }
+      )
+    }
+
+ 
+  }
   public Path!: string;
   onChangeImage(event: any) {
     this.Path = event.target.files[0]
   }
 
-  
-  public async update() {
-    let url = await this.SupportService.uploadImage(this.Path, 'student', this.data.storage);   
-     let newFormStudent = {
-      ...this.form.value,
-      url: url,
-      storage: this.data.storage
-    }
-     this.data_service.putStudent(newFormStudent,).subscribe(
-      res=> {
-        alert('cap nhat thanh cong')
-        this.dialogRef.close();
-        window.location.reload();
-      }
-    )
- 
-  }
 
 }

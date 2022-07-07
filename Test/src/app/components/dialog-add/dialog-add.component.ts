@@ -15,6 +15,11 @@ interface Role {
   viewValue: string;
 }
 
+interface Stat {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-dialog-add',
   templateUrl: './dialog-add.component.html',
@@ -39,8 +44,14 @@ export class DialogAddComponent implements OnInit {
     { value: 'Ugly', viewValue: 'Ugly' }
   ];
 
+  selectedStat: string | undefined;
+  stats: Stat[] = [
+    { value: 'Graduate', viewValue: 'Graduate' },
+    { value: 'Studying', viewValue: 'Studying' },
+    { value: 'Reserve', viewValue: 'Reserve' },
+  ];
 
-  public idCount = 0;
+  public id = 0;
   form !: FormGroup;
   students: Student[] = [];
 
@@ -53,11 +64,13 @@ export class DialogAddComponent implements OnInit {
     private SupportService: SupportService
   ) {
     this.studentsCollection = this.afs.collection<Student>('students');
+
   }
 
   ngOnInit(): void {
     (async () => {
-      this.idCount = await this.getId();
+      this.id = await this.getId();
+      console.log(this.id)
       console.log(this.form.value)
     })();
 
@@ -66,24 +79,32 @@ export class DialogAddComponent implements OnInit {
       Class: ['', Validators.required],
       Gender: ['', Validators.required],
       Role: ['', Validators.required],
+      Status: ['', Validators.required],
       Phone: ['', [Validators.required, Validators.pattern('[0-9]{9,10}')]],
       Address: ['', Validators.required],
       Email: ['', [Validators.required, Validators.email]],
     });
   }
 
-  getId(): Promise<number> {
-    return new Promise((resolve, rejects) => {
-      this.studentsCollection.valueChanges().subscribe((values: Student[]) => {
+  // getId(): Promise<number> {
+  //   return new Promise((resolve, rejects) => {
+  //     this.studentsCollection.valueChanges().subscribe((values: Student[]) => {
 
-        let count = values.length + 1;
-        resolve(count);
-        // console.log(typeof (this.idCount));
-        // console.log(this.idCount);
-        // console.log(`i have a feeling that ${this.idCount} is not a number`);
-      });
-    })
+  //       let count = values.length + 1;
+  //       resolve(count);
+  //       // console.log(typeof (this.idCount));
+  //       // console.log(this.idCount);
+  //       // console.log(`i have a feeling that ${this.idCount} is not a number`);
+  //     });
+  //   })
 
+  // }
+  getId() {
+    let tempDay = new Date();
+    let day = tempDay.toLocaleDateString();
+    let time = tempDay.toLocaleTimeString();
+    let currentTimestamp = Date.parse(day + " " + time) / 1000;
+    return currentTimestamp;
   }
 
   public Path!: string;
@@ -108,23 +129,29 @@ export class DialogAddComponent implements OnInit {
       );
       this.dialogRef.close();
     }
-    
+
     let docid = this.afs.createId();
-    if (this.idCount == 0) return;
-    let url = await this.SupportService.uploadImage(this.Path, 'student', docid);
-    let newForm = {
-      ...this.form.value,
-      Id: this.idCount,
-      url: url,
-      storage: docid
+
+    if (this.Path != null) {
+      let url = await this.SupportService.uploadImage(this.Path, 'student', docid);
+      let newForm = {
+        ...this.form.value,
+        Id: this.id,
+        url: url,
+        storage: docid
+      }
+      //them vao itemsCollection với docid cụ thể
+      this.studentsCollection.doc(docid).set(Object.assign({}, newForm));//Object.assign({} khong co lenh nay thi se khong them vao firebase duoc
+    } else {
+      let newForm = {
+        ...this.form.value,
+        Id: this.id,
+        storage: docid
+      }
+      //them vao itemsCollection với docid cụ thể
+      this.studentsCollection.doc(docid).set(Object.assign({}, newForm));//Object.assign({} khong co lenh nay thi se khong them vao firebase duoc
     }
-    //them vao itemsCollection với docid cụ thể
-    this.studentsCollection.doc(docid).set(Object.assign({}, newForm));//Object.assign({} khong co lenh nay thi se khong them vao firebase duoc
- 
-    
   }
-
-
 }
 
 

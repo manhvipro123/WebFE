@@ -1,55 +1,284 @@
-.pop-up-box{ 
-    width: 40vw;
-}
-.ava{
-    float: left;
+// .pop-up-box{ 
+//     width: 40vw;
+// }
+// .ava{
+//     float: left;
+// }
+
+// .ava img{
+//     margin: 0;
+//     width: 100px;
+
+//     padding-bottom: 50px;
+//     padding-left: 20px;
+
+// }
+
+// .bio{
+//     float: right;
+
+//     padding-bottom: 50px;
+//     width: 300px;
+// }
+
+// .tag{
+//     display: inline-block;
+//     width: 70px;
+// }
+
+// li h2{
+//     width: 230px;
+//     display: inline-block;
+// }
+
+// li h3{
+//     width: 230px;
+//     display: inline-block;
+// }
+
+// #close{
+//     clear: both;
+// }
+
+// .option-char:hover{
+//     cursor: pointer;
+//     font-weight: bolder;
+// }
+
+// ul{
+//     list-style-type: none;
+// }
+
+//template
+// .card {
+//   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+//   max-width: 350px;
+//   margin: auto;
+//   text-align: center;
+// }
+
+// .title {
+//   color: grey;
+//   font-size: 18px;
+// }
+
+// // button {
+// //   border: none;
+// //   outline: 0;
+// //   display: inline-block;
+// //   // padding: 8px;
+// //   color: white;
+// //   background-color: #000;
+// //   text-align: center;
+// //   cursor: pointer;
+// //   width: 100%;
+// //   font-size: 18px;
+// // }
+
+// a {
+//   text-decoration: none;
+//   font-size: 22px;
+//   color: black;
+// }
+
+// button:hover,
+// a:hover {
+//   opacity: 0.7;
+// }
+
+$base-text-color: #151515;
+$base-link-color: #1daaff;
+$base-hover-color: darken($base-link-color, 20);
+
+$profile-card-size: 500px;
+$profile-avatar-size: 150px;
+
+* {
+  box-sizing: border-box;
 }
 
-.ava img{
+html,
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  user-select: none;
+}
+
+/* 
+  some styling for display on codepen,
+  you can safely remove this when you
+  want to use this module somewhere else 
+*/
+.codepen {
+  margin: 2em auto;
+
+  h1 {
+    color: lighten($base-text-color, 20);
+    font-weight: 100;
+  }
+
+  a {
+    color: $base-link-color;
+
+    &:hover {
+      color: $base-hover-color;
+    }
+  }
+}
+
+.profile {
+  @extend .codepen;
+  max-width: $profile-card-size;
+  border: 1px solid lighten($base-text-color, 80);
+  border-radius: 20px;
+  padding: 2em;
+  margin: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  position: relative;
+
+  figure {
     margin: 0;
-    width: 300px;
 
-    padding-bottom: 50px;
-    padding-left: 20px;
-    
-}
+    img {
+      max-width: $profile-avatar-size;
+      max-height: $profile-avatar-size;
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow: 0px 0px 20px rgba($base-text-color, .15);
+    }
+  }
 
-.bio{
-    float: right;
-    
-    padding-bottom: 50px;
-    width: 300px;
-}
+  // end figure
 
-.tag{
-    display: inline-block;
-    width: 70px;
-}
+  header {
+    h1 {
+      margin: 0 10px 0 10px;
+      padding: 0;
+      line-height: 1;
 
-li h2{
-    width: 230px;
-    display: inline-block;
-}
+      small {
+        display: block;
+        clear: both;
+        font-size: 18px;
+        opacity: 0.6;
 
-li h3{
-    width: 230px;
-    display: inline-block;
-}
+      }
+    }
+  }
 
-#close{
-    clear: both;
-}
+  // end header
 
-.option-char:hover{
+  main {
+    // display: none;
+
+    dl {
+      display: block;
+      width: 100%;
+
+      dt,
+      dd {
+        float: left;
+        padding: 8px 5px;
+        margin: 0;
+        border-bottom: 1px solid lighten($base-text-color, 80);
+
+        a {
+          padding-right: 5px;
+        }
+      }
+
+      dt {
+        width: 30%;
+        padding-right: 10px;
+        font-weight: bold;
+
+        &:after {
+          content: ":"
+        }
+      }
+
+      dd {
+        width: 70%;
+      }
+    }
+  }
+
+  .toggle {
+    position: absolute;
+    background: #fff;
+    top: 30px;
+    left: 30px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 24px;
+    text-align: center;
+    z-index: 20;
+    vertical-align: middle;
+    box-shadow: 0px 0px 10px rgba($base-text-color, .15);
     cursor: pointer;
-    font-weight: bolder;
+    border-radius: 20px;
+    user-select: none;
+    transition: box-shadow 300ms ease;
+
+    &:hover {
+      box-shadow: 0px 0px 10px rgba($base-text-color, .25);
+    }
+
+    main {
+      font-size: 16px;
+    }
+  }
 }
 
-ul{
-    list-style-type: none;
+.view_details {
+  position: absolute;
+  top: -5000px;
+  left: -5000px;
 }
 
-::ng-deep .mat-dialog-container{
-    padding: 0;
-    margin: 0;
+label {
+  display: block;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 520px) {
+  .profile {
+    padding: 1em;
+    margin: 1em;
+  }
+
+  .profile img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .profile main dl,
+  .profile main dl dt,
+  .profile main dl dd {
+    display: block;
+    width: 100%;
+    float: none;
+  }
+
+  .profile main dl dt {
+    border-bottom: none;
+  }
+
+  .profile main dl dd {
+    margin-bottom: 10px;
+  }
+
+  .profile .toggle {
+    top: 15px;
+    left: 15px;
+  }
+}
+
+::ng-deep .mat-dialog-container {
+  padding: 0;
 }

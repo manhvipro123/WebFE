@@ -1,4 +1,4 @@
-<div class="pop-up-box">
+<!-- <div class="pop-up-box">
     <h1 style="text-align:center;padding:10px 0 10px 0;font-weight: bolder;">Student Card</h1>
     <div class="ava">
         <img [src]="data.url"  alt="">
@@ -34,10 +34,56 @@
                 <h3>{{data.Email}}</h3>
             </li>
             <a class="option-char" (click)="openUpdateDialog(this.data)" style="text-align: center;">UPDATE</a>
-            <br>
-            <a class="option-char" (click)="openUpdateItem(this.data)" style="text-align: center;">UPDATE BY SERVER</a>
         </ul>
     </div>
     <div id="close"></div>
     
+</div> -->
+<!-- <div class="card">
+    <img [src]="data.url" style="width:350px; height: 300px;">
+    <h1>{{data.Name}}</h1>
+    <p class="title">{{data.Class}}</p>
+    <p class="title">{{data.Gender}}</p>
+    <p class="title">{{data.Role}}</p>
+    <p class="title">{{data.Phone}}</p>
+    <p class="title">{{data.Address}}</p>
+    <p class="title">{{data.Email}}</p>
+
+   <button style="line-height:0;"  (click)="openUpdateDialog(this.data)"><i class='fas fa-user-edit' style='font-size:24px'></i></button>
+</div> -->
+
+<div class="profile">
+    <figure>
+        <img [src]="data.url" alt="" />
+    </figure>
+    <header>
+        <h1>{{data.Name}}
+            <small>Student profile</small>
+        </h1>
+    </header>
+
+    <div (click)="onClickToggle()" class="toggle">
+        <input #view type="checkbox" class="view_details" id="view_details">
+        <label class="icon" for="view_details" title="tap here to view full profile">☰</label>
+    </div>
+    <button style="line-height:0;"  (click)="openUpdateDialog(this.data)"><i class='fas fa-user-edit' style='font-size:24px'></i></button>
+    <main>
+        <dl>
+            <dt>Full name</dt>
+            <dd>{{data.Name}}</dd>
+            <dt>Class</dt>
+            <dd>{{data.Class}}</dd>
+            <dt>Gender</dt>
+            <dd>{{data.Gender}}</dd>
+            <dt>Role</dt>
+            <dd>{{data.Role}}</dd>
+            <dt>Phone</dt>
+            <dd>{{data.Phone}}</dd>
+            <dt>Address</dt>
+            <dd>{{data.Address}}</dd>
+            <dt>Email</dt>
+            <dd>{{data.Email}}</dd>
+        </dl>
+        
+    </main>
 </div>

@@ -16,6 +16,11 @@ interface Role {
   viewValue: string;
 }
 
+interface Stat {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-insert-item',
   templateUrl: './insert-item.component.html',
@@ -39,7 +44,14 @@ export class InsertItemComponent implements OnInit {
     { value: 'Ugly', viewValue: 'Ugly' }
   ];
 
-  public idCount = 0;
+  selectedStat: string | undefined;
+  stats: Stat[] = [
+    { value: 'Graduate', viewValue: 'Graduate' },
+    { value: 'Studying', viewValue: 'Studying' },
+    { value: 'Reserve', viewValue: 'Reserve' },
+  ];
+
+  public id = 0;
   form !: FormGroup;
   students: Student[] = [];
   private studentsCollection: AngularFirestoreCollection<Student>;
@@ -54,7 +66,7 @@ export class InsertItemComponent implements OnInit {
 
   ngOnInit(): void {
     (async () => {
-      this.idCount = await this.getId();
+      this.id = await this.getId();
       // console.log(this.form.value)
     })();
 
@@ -63,6 +75,7 @@ export class InsertItemComponent implements OnInit {
       Class: ['', Validators.required],
       Gender: ['', Validators.required],
       Role: ['', Validators.required],
+      Status: ['', Validators.required],
       Phone: ['', [Validators.required, Validators.pattern('[0-9]{9,10}')]],
       Address: ['', Validators.required],
       Email: ['', [Validators.required, Validators.email]],
@@ -70,18 +83,25 @@ export class InsertItemComponent implements OnInit {
   }
 
 
-  getId(): Promise<number> {
-    return new Promise((resolve, rejects) => {
-      this.studentsCollection.valueChanges().subscribe((values: Student[]) => {
+  // getId(): Promise<number> {
+  //   return new Promise((resolve, rejects) => {
+  //     this.studentsCollection.valueChanges().subscribe((values: Student[]) => {
 
-        let count = values.length + 1;
-        resolve(count);
-        // console.log(typeof (this.idCount));
-        // console.log(this.idCount);
-        // console.log(`i have a feeling that ${this.idCount} is not a number`);
-      });
-    })
+  //       let count = values.length + 1;
+  //       resolve(count);
+  //       // console.log(typeof (this.idCount));
+  //       // console.log(this.idCount);
+  //       // console.log(`i have a feeling that ${this.idCount} is not a number`);
+  //     });
+  //   })
 
+  // }
+  getId() {
+    let tempDay = new Date();
+    let day = tempDay.toLocaleDateString();
+    let time = tempDay.toLocaleTimeString();
+    let currentTimestamp = Date.parse(day + " " + time) / 1000;
+    return currentTimestamp;
   }
 
   public Path!: string;
@@ -93,27 +113,39 @@ export class InsertItemComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    let docid = this.afs.createId();
-    if (this.idCount == 0) return;
-    let url = await this.SupportService.uploadImage(this.Path, 'student', docid);
-    let newFormStudent = {
-      ...this.form.value,
-      storage: docid,
-      Id: this.idCount,
-      url
-    }
-    // await (
-    //   await this.data_service.postStudent(newForm, url)
-    //   ).subscribe((value: any) => {
-    //   alert(value['message']);
-    // });   
-    this.data_service.postStudent(newFormStudent,).subscribe(
-      res => {
-        alert('them thanh cong')
-        this.dialogRef.close();
-        // window.location.reload();
-      }
-    )
-  }
 
+    let docid = this.afs.createId();
+    if (this.Path != null) {
+      let url = await this.SupportService.uploadImage(this.Path, 'student', docid);
+      let newFormStudent = {
+        ...this.form.value,
+        storage: docid,
+        Id: this.id,
+        url: url
+      }
+      this.data_service.postStudent(newFormStudent,).subscribe(
+        res => {
+          alert('them thanh cong')
+          this.dialogRef.close();
+          window.location.reload();
+        }
+      )
+    } else {
+      let newFormStudent = {
+        ...this.form.value,
+        storage: docid,
+        Id: this.id,
+
+      }
+      this.data_service.postStudent(newFormStudent,).subscribe(
+        res => {
+          alert('them thanh cong')
+          this.dialogRef.close();
+          window.location.reload();
+        }
+      )
+
+    }
+
+  }
 }

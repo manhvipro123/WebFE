@@ -1,24 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { ObservableInput, of, take, tap } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Student } from 'src/models/student.model';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { InsertItemComponent } from '../insert-item/insert-item.component';
+import { DetailItemComponent } from '../detail-item/detail-item.component';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-table-server',
   templateUrl: './table-server.component.html',
-  styleUrls: ['./table-server.component.scss']
+  styleUrls: ['./table-server.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TableServerComponent implements OnInit {
 
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
+  position = new FormControl(this.positionOptions[3]);
+
   searchText: any;
   students: Student[] = [];
+  
   //page-slice
   config: any;
-  //
+  
+    //icon-status
+    Studying : String = "Studying";
+    Graduate : String = "Graduate";
+    Reserve: String = "Reserve";
 
   constructor(private data_service: DataService,
     public dialog: MatDialog,
@@ -42,6 +53,7 @@ export class TableServerComponent implements OnInit {
     return (await this.data_service.getStudents(apiPath)).subscribe(value => {
       this.students = value;
       console.log(this.students);
+      console.log("count of item: " + this.students.length);
     });
   }
 
@@ -71,6 +83,8 @@ export class TableServerComponent implements OnInit {
           return compare(a.Gender, b.Gender, isAsc);
         case 'Role':
           return compare(a.Role, b.Role, isAsc);
+        case 'Status':
+          return compare(a.Status, b.Status, isAsc);
         case 'Address':
           return compare(a.Address, b.Address, isAsc);
         case 'Phone':
@@ -84,7 +98,7 @@ export class TableServerComponent implements OnInit {
   }
 
   public openDetailDialog(stu: any): void {
-    const dialogRef = this.dialog.open(DialogDetailComponent, {
+    const dialogRef = this.dialog.open(DetailItemComponent, {
       data: stu
     });
     dialogRef.afterClosed().subscribe(() => {

@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Student } from 'src/models/student.model';
 import { SupportService } from '../../services/support.service';
+
 
 interface Gend {
   value: string;
@@ -11,6 +12,11 @@ interface Gend {
 }
 
 interface Role {
+  value: string;
+  viewValue: string;
+}
+
+interface Stat {
   value: string;
   viewValue: string;
 }
@@ -39,6 +45,13 @@ export class DialogUpdateComponent implements OnInit {
     { value: 'Ugly', viewValue: 'Ugly' }
   ];
 
+  selectedStat: string | undefined = this.data.Status;;
+  stats: Stat[] = [
+    { value: 'Graduate', viewValue: 'Graduate' },
+    { value: 'Studying', viewValue: 'Studying' },
+    { value: 'Reserve', viewValue: 'Reserve' },
+  ];
+
   private studentsCollection: AngularFirestoreCollection<Student>;
   form !: FormGroup;
   constructor(
@@ -46,6 +59,7 @@ export class DialogUpdateComponent implements OnInit {
     public formBuilder: FormBuilder,
     private readonly afs: AngularFirestore,
     public dialogRef: MatDialogRef<DialogUpdateComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.studentsCollection = this.afs.collection<Student>('students');
@@ -55,6 +69,7 @@ export class DialogUpdateComponent implements OnInit {
       Class: [`${this.data.Class}`, Validators.required],
       Gender: [`${this.data.Gender}`, Validators.required],
       Role: [`${this.data.Role}`, Validators.required],
+      Status: [`${this.data.Status}`, Validators.required],
       Phone: [`${this.data.Phone}`, [Validators.required, Validators.pattern('[0-9]{9,10}')]],
       Address: [`${this.data.Address}`, Validators.required],
       Email: [`${this.data.Email}`, [Validators.required, Validators.email]],
@@ -82,14 +97,27 @@ export class DialogUpdateComponent implements OnInit {
         `
       );
       this.dialogRef.close();
+      this.dialog.closeAll();
     }
-
-    let url = await this.SupportService.uploadImage(this.Path, 'student', this.data.storage);
-    let newForm = {
-      ...this.form.value,
-      url: url
+    if(this.Path != null){
+      let url = await this.SupportService.uploadImage(this.Path, 'student', this.data.storage);
+      let newForm = {
+        ...this.form.value,
+        storage: this.data.storage,
+        url: url,
+      }
+      this.studentsCollection.doc(this.data.docID).update(newForm);
+    }else{
+      let newForm = {
+        ...this.form.value,
+        storage: this.data.storage,
+        url: this.data.url,
+      }
+      this.studentsCollection.doc(this.data.docID).update(newForm);
     }
-    this.studentsCollection.doc(this.data.docID).update(newForm);
+   
+    
+   
   
   }
 

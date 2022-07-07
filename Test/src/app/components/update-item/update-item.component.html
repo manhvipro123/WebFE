@@ -25,6 +25,9 @@
                 {{gend.viewValue}}
             </mat-option>
         </mat-select>
+        <div *ngIf="form.controls['Gender'].hasError('required') && (form.controls['Gender'].dirty||form.controls['Gender'].touched)">
+            <small id="emailHelp" class="text-danger">Gender is empty.</small>
+        </div>
     </mat-form-field>
     <mat-form-field appearance="legacy">
         <mat-label>Role</mat-label>
@@ -33,8 +36,24 @@
                 {{role.viewValue}}
             </mat-option>
         </mat-select>
+        <div *ngIf="form.controls['Role'].hasError('required') && (form.controls['Role'].dirty||form.controls['Role'].touched)">
+            <small id="emailHelp" class="text-danger">Role is empty.</small>
+        </div>
     </mat-form-field>
   
+    <mat-form-field appearance="legacy">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="selectedStat" formControlName="Status">
+            <mat-option *ngFor="let stat of stats" [value]="stat.value">
+                {{stat.viewValue}}
+            </mat-option>
+            <div
+                *ngIf="form.controls['Status'].hasError('required') && (form.controls['Status'].dirty||form.controls['Status'].touched)">
+                <small id="emailHelp" class="text-danger">Status is empty.</small>
+            </div>
+        </mat-select>
+    </mat-form-field>
+    
     <mat-form-field appearance="legacy">
         <mat-label>Phone</mat-label>
         <input formControlName="Phone" matInput placeholder="Phone">

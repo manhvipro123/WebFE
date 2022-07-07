@@ -2,6 +2,7 @@ const express = require('express');
 // const bodyParser = require("body-parser");
 const cors = require('cors');
 const app = express();
+
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./keys/key.json");
@@ -52,7 +53,7 @@ app.get("/api/:name", async function (request, response) {
 //insert 1 item to colletion
 app.post("/api/:name", async (req,res) => {
   try{
-    let params = req.params.name
+    let params = req.params.name;
     let body = req.body;
     // let docName = body.data.Name.split(" ").join(""); "-" + Math.round(Math.random() * 10).toString();
     await firestore.collection(params).add(body);
@@ -65,13 +66,13 @@ app.post("/api/:name", async (req,res) => {
 });
 
 // update hoàn toàn dữ liệu mới
-app.put("/api/:name", async (request, response) => {
-  let params = request.params.name;
-  let docId = request.body.docID;
+app.put("/api/:docID", async (request, response) => {
+  let params = "students";
+  let docId = request.params.docID;
   try {
     let result = await firestore.collection(params)
       .doc(docId)
-      .set(request.body.data);
+      .set(request.body);
     response.send({
       message: "Update successful!!",
       updateTime: result.writeTime,
