@@ -38,6 +38,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { DetailItemComponent } from './components/detail-item/detail-item.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserProfileDialogComponent } from './components/user-profile-dialog/user-profile-dialog.component';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import { DeleteItemComponent } from './components/delete-item/delete-item.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { UserProfileDialogComponent } from './components/user-profile-dialog/use
     RegisterComponent,
     DetailItemComponent,
     UserProfileDialogComponent,
+    DeleteDialogComponent,
+    DeleteItemComponent,
 
 
 

@@ -17,29 +17,31 @@
             <small id="emailHelp" class="text-danger">Class is empty.</small>
         </div>
     </mat-form-field>
+
     <mat-form-field appearance="legacy">
         <mat-label>Gender</mat-label>
         <mat-select [(ngModel)]="selectedGend" formControlName="Gender">
             <mat-option *ngFor="let gend of gends" [value]="gend.value">
                 {{gend.viewValue}}
             </mat-option>
-            <div
-                *ngIf="form.controls['Gender'].hasError('required') && (form.controls['Gender'].dirty||form.controls['Gender'].touched)">
-                <small id="emailHelp" class="text-danger">Gender is empty.</small>
-            </div>
         </mat-select>
+        <div
+            *ngIf="form.controls['Gender'].hasError('required') && (form.controls['Gender'].dirty||form.controls['Gender'].touched)">
+            <small id="emailHelp" class="text-danger">Gender is empty.</small>
+        </div>
     </mat-form-field>
+
     <mat-form-field appearance="legacy">
         <mat-label>Role</mat-label>
         <mat-select [(ngModel)]="selectedRole" formControlName="Role">
             <mat-option *ngFor="let role of roles" [value]="role.value">
                 {{role.viewValue}}
             </mat-option>
-            <div
-                *ngIf="form.controls['Role'].hasError('required') && (form.controls['Role'].dirty||form.controls['Role'].touched)">
-                <small id="emailHelp" class="text-danger">Role is empty.</small>
-            </div>
         </mat-select>
+        <div
+            *ngIf="form.controls['Role'].hasError('required') && (form.controls['Role'].dirty||form.controls['Role'].touched)">
+            <small id="emailHelp" class="text-danger">Role is empty.</small>
+        </div>
     </mat-form-field>
 
     <mat-form-field appearance="legacy">
@@ -48,11 +50,11 @@
             <mat-option *ngFor="let stat of stats" [value]="stat.value">
                 {{stat.viewValue}}
             </mat-option>
-            <div
-                *ngIf="form.controls['Status'].hasError('required') && (form.controls['Status'].dirty||form.controls['Status'].touched)">
-                <small id="emailHelp" class="text-danger">Status is empty.</small>
-            </div>
         </mat-select>
+        <div
+            *ngIf="form.controls['Status'].hasError('required') && (form.controls['Status'].dirty||form.controls['Status'].touched)">
+            <small id="emailHelp" class="text-danger">Status is empty.</small>
+        </div>
     </mat-form-field>
 
     <mat-form-field appearance="legacy">
@@ -63,7 +65,7 @@
             <small id="emailHelp" class="text-danger">Phone is empty.</small>
         </div>
         <div *ngIf="form.controls['Phone'].hasError('pattern')">
-            <small id="emailHelp" class="text-danger">Phone's length is not correct.</small>
+            <small id="emailHelp" class="text-danger">Phone's length or Phone's pattern is not correct.</small>
         </div>
     </mat-form-field>
     <mat-form-field appearance="legacy">

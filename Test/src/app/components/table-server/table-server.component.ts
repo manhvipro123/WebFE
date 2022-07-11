@@ -8,6 +8,7 @@ import { InsertItemComponent } from '../insert-item/insert-item.component';
 import { DetailItemComponent } from '../detail-item/detail-item.component';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
+import { DeleteItemComponent } from '../delete-item/delete-item.component';
 
 @Component({
   selector: 'app-table-server',
@@ -57,10 +58,7 @@ export class TableServerComponent implements OnInit {
     });
   }
 
-  public async deleteStu(stu: any) {
-    this.data_service.deleteStudent(stu.docID);
-    window.location.reload();
-  }
+
 
   sortData(sort: Sort) {
     console.log("lol")
@@ -99,6 +97,15 @@ export class TableServerComponent implements OnInit {
 
   public openDetailDialog(stu: any): void {
     const dialogRef = this.dialog.open(DetailItemComponent, {
+      data: stu
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  public openDeleteDialog(stu: any): void {
+    const dialogRef = this.dialog.open(DeleteItemComponent, {
       data: stu
     });
     dialogRef.afterClosed().subscribe(() => {

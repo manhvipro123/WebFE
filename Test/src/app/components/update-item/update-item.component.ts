@@ -1,6 +1,6 @@
 import { Component, OnInit,Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore} from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Student } from 'src/models/student.model';
 import { SupportService } from '../../services/support.service';
@@ -50,7 +50,7 @@ export class UpdateItemComponent implements OnInit {
     { value: 'Reserve', viewValue: 'Reserve' },
   ];
 
-  studentsCollection: AngularFirestoreCollection<Student>;
+  // studentsCollection: AngularFirestoreCollection<Student>;
   form !: FormGroup;
   constructor(
     private data_service: DataService,
@@ -61,7 +61,7 @@ export class UpdateItemComponent implements OnInit {
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    this.studentsCollection = this.afs.collection<Student>('students');
+    // this.studentsCollection = this.afs.collection<Student>('students');
     this.form = this.formBuilder.group({
       Id: [`${this.data.Id}`, Validators.required],
       Name: [`${this.data.Name}`, Validators.required],

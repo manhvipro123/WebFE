@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { url } from 'inspector';
-import { env } from 'process';
+
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Student } from 'src/models/student.model';
@@ -28,10 +27,8 @@ export class DataService {
     return this.http.put(environment.endpoint + `api/${docID}`, student);
   }
 
-  public deleteStudent(docid: string) {
- 
-    return this.http.delete(environment.endpoint + 'api/students/' + docid,)
-    .subscribe(() => console.log("Delete success"));
+  public deleteStudent(docid: string){
+    return this.http.delete(environment.endpoint + 'api/students/' + docid);
   }
 
 }

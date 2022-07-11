@@ -9,8 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegisterComponent implements OnInit {
   email: string = '';
   password: string = '';
-  name: string = '';
-  photoURL: string = '';
+
   constructor(private auth: AuthService, private route: Router) { }
 
   ngOnInit(): void {
@@ -31,8 +30,6 @@ export class RegisterComponent implements OnInit {
     this.password = '';
   }
 
-  update(){
-    this.auth.update(this.name,this.photoURL);
-  }
+
 
 }

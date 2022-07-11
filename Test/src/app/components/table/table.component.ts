@@ -4,6 +4,7 @@ import { Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddComponent } from '../dialog-add/dialog-add.component';
 import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { Student } from 'src/models/student.model';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
@@ -81,8 +82,6 @@ export class TableComponent implements OnInit {
     });
   }
 
-
-
   public openDetailDialog(stu: any): void {
     const dialogRef = this.dialog.open(DialogDetailComponent, {
       data: stu
@@ -92,11 +91,16 @@ export class TableComponent implements OnInit {
     });
   }
 
-  public async deleteStu(stu: any) {
-    await (
-      this.studentsCollection.doc(stu.docID).delete()
-    )
+  openDeleteDialog(stu: Student): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: stu
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
   }
+
+
 
   sortData(sort: Sort) {
     console.log("lol")

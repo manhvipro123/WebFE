@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Student } from 'src/models/student.model';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SupportService } from '../../services/support.service';
@@ -54,22 +54,19 @@ export class InsertItemComponent implements OnInit {
   public id = 0;
   form !: FormGroup;
   students: Student[] = [];
-  private studentsCollection: AngularFirestoreCollection<Student>;
+  // studentsCollection: AngularFirestoreCollection<Student>;
 
   constructor(public formBuilder: FormBuilder,
     private readonly afs: AngularFirestore,
     public dialogRef: MatDialogRef<InsertItemComponent>,
     private SupportService: SupportService,
     private data_service: DataService) {
-    this.studentsCollection = this.afs.collection<Student>('students');
+    // this.studentsCollection = this.afs.collection<Student>('students');
+
   }
 
   ngOnInit(): void {
-    (async () => {
-      this.id = await this.getId();
-      // console.log(this.form.value)
-    })();
-
+    this.id = this.getId();
     this.form = this.formBuilder.group({
       Name: ['', Validators.required],
       Class: ['', Validators.required],
@@ -123,7 +120,7 @@ export class InsertItemComponent implements OnInit {
         Id: this.id,
         url: url
       }
-      this.data_service.postStudent(newFormStudent,).subscribe(
+      this.data_service.postStudent(newFormStudent).subscribe(
         res => {
           alert('them thanh cong')
           this.dialogRef.close();
@@ -135,16 +132,14 @@ export class InsertItemComponent implements OnInit {
         ...this.form.value,
         storage: docid,
         Id: this.id,
-
       }
-      this.data_service.postStudent(newFormStudent,).subscribe(
+      this.data_service.postStudent(newFormStudent).subscribe(
         res => {
           alert('them thanh cong')
           this.dialogRef.close();
           window.location.reload();
         }
       )
-
     }
 
   }

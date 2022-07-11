@@ -68,12 +68,7 @@ export class DialogAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    (async () => {
-      this.id = await this.getId();
-      console.log(this.id)
-      console.log(this.form.value)
-    })();
-
+    this.id = this.getId();
     this.form = this.formBuilder.group({
       Name: ['', Validators.required],
       Class: ['', Validators.required],

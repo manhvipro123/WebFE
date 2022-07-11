@@ -17,6 +17,7 @@
             <small id="emailHelp" class="text-danger">Class is empty.</small>
         </div>
     </mat-form-field>
+
     <mat-form-field appearance="legacy">
         <mat-label>Gender</mat-label>
         <mat-select [(ngModel)]="selectedGend" formControlName="Gender">
@@ -49,11 +50,12 @@
             <mat-option *ngFor="let stat of stats" [value]="stat.value">
                 {{stat.viewValue}}
             </mat-option>
-            <div
-                *ngIf="form.controls['Status'].hasError('required') && (form.controls['Status'].dirty||form.controls['Status'].touched)">
-                <small id="emailHelp" class="text-danger">Status is empty.</small>
-            </div>
         </mat-select>
+        <div
+            *ngIf="form.controls['Status'].hasError('required') && (form.controls['Status'].dirty||form.controls['Status'].touched)">
+            <small id="emailHelp" class="text-danger">Status is empty.</small>
+        </div>
+
     </mat-form-field>
 
     <mat-form-field appearance="legacy">

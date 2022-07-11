@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Student } from 'src/models/student.model';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-dialog-detail',
   templateUrl: './dialog-detail.component.html',
-  styleUrls: ['./dialog-detail.component.scss']
+  styleUrls: ['./dialog-detail.component.scss'],
 })
 export class DialogDetailComponent implements OnInit, AfterViewInit {
   public studentsCollection: AngularFirestoreCollection<Student>;

@@ -3,13 +3,11 @@
     <div class="login-page">
         <div class="form" >
           <form class="login-form" >
-            <input ngModel placeholder="Name" [(ngModel)]="name"  name ="name" type="text"/>
+          
             <input ngModel placeholder="Email address" [(ngModel)]="email" name ="email"  type="text"/>
             <input ngModel placeholder="Password" [(ngModel)]="password"  name ="password" type="password"/>
-            <input ngModel placeholder="PhotoURL" [(ngModel)]="photoURL"  name ="photoURL" type="text"/>
             <button (click)="tryCreateFirebaseAccount()">Sign up</button>
-            <button (click)="update()">Update Name and Photo</button>
-            <p class="message">Already registered? <a href="/login">Sign In</a></p>
+            <p class="message">Already registered? <a [routerLink]="['']">Sign In</a></p>
           </form>
 
         </div>

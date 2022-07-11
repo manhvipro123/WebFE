@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import { SharingService } from './sharing.service';
 import { UserService } from './user.service';
-import { Auth, getAuth, updateProfile} from "firebase/auth";
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if(user){
         this.curUser = user
+        this.sharing.isUserLoggedIn.next(true);
         console.log(this.curUser)
       }
     })
@@ -38,6 +39,7 @@ export class AuthService {
         console.log(res.user);
         this.curUser = res.user;
         this.sharing.isUserLoggedIn.next(true);
+        this.router.navigateByUrl("login");
       }).catch((err) => {
         alert(err.message);
       })
@@ -52,10 +54,12 @@ export class AuthService {
       // Update successful
       // ...
       alert('Update successfull');
+      window.location.reload();
     }).catch((error) => {
       // An error occurred
       // ...
       alert(error.message);
+      window.location.reload();
     });  
   }
   
